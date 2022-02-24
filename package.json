@@ -8,6 +8,8 @@
   "author": "Rémi Launay <relaunay@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "deps": "yarn && cd example && yarn",
+    "dev": "cd example && yarn dev",
     "build": "rollup -c",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
