@@ -3,7 +3,7 @@ import { DatePicker } from './../../src'
 const App: React.FC = () => {
   return (
     <div>
-     <DatePicker />
+      <DatePicker />
     </div>
   )
 }
