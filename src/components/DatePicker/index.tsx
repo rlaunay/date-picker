@@ -59,7 +59,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   })
   
   return (
-    <span className="container" ref={datePickerRef} >
+    <span className="date-picker" ref={datePickerRef} >
       <input
         type="text" 
         style={style} 

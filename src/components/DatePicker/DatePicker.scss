@@ -1,9 +1,24 @@
-.container {
+.date-picker {
   position: relative;
-  background-color: red;
 
   & .picker {
     position: absolute;
     border: 1px solid black;
+    padding: 10px;
+
+    & thead {
+      & th {
+        padding: 5px;
+        text-align: center;
+        color: grey;
+      }
+    }
+
+    & tbody {
+      & td {
+        padding: 5px;
+        text-align: center;
+      }
+    }
   }
 }
