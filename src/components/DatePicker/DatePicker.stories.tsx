@@ -1,10 +1,17 @@
-import {DatePicker} from '.'
+import type {Meta} from '@storybook/react'
+import {DatePicker, DatePickerProps} from '.'
 
-export default {
+const meta: Meta = {
   title: 'Date Picker',
-  compenent: DatePicker
+  component: DatePicker,
 }
 
-export const Default = (args) => {
-  return <DatePicker />
+export default meta;
+
+const Template = (args: DatePickerProps) => {
+  return <div style={{ height: 300 }} >
+    <DatePicker {...args} />
+  </div>
 }
+
+export const Default = Template.bind({})

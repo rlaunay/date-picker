@@ -4,16 +4,21 @@ import { useClickOutside } from '../../hooks/useClickOutside';
 import { checkDate, getDate, months, parseDate } from './utils';
 
 import './DatePicker.scss';
+import ChevronRight from './assets/ChevronRight';
+import ArrowDropDown from './assets/ArrowDropDown';
+import ChevronLeft from './assets/ChevronLeft';
+import Days from './components/Days';
 
-type DatePickerProps = {
+export type DatePickerProps = {
   className?: string | undefined;
   style?: React.CSSProperties | undefined;
   onChange?: (e: string) => void;
   value?: string;
+  color?: string;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value }) => {
-  const datePickerRef = useRef(null);
+export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color = '#e74c3c' }) => {
+  const datePickerRef = useRef<HTMLDivElement>(null);
 
   const [datePickerValue, setDatePickerValue] = useState<string>(() => {
     if (value && checkDate(value)) {
@@ -45,7 +50,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   });
 
   useEffect(() => {
-    console.log('ici')
     const date = `${year}-${month}-${day}`;
     setDatePickerValue(date)
 
@@ -57,89 +61,53 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   useClickOutside(datePickerRef, () => {
     setIsOpen(false)
   })
+
+  useEffect(() => {
+    if (!datePickerRef.current || !color) return;
+
+    datePickerRef.current.style.setProperty('--primary-color', color)
+  }, [color])
   
   return (
     <span className="date-picker" ref={datePickerRef} >
       <input
-        type="text" 
+        type="text"
         style={style} 
-        className={className}
+        className={`input-picker${isOpen ? ' active' : ''} ${className}`}
         onFocus={() => setIsOpen(true)} 
         value={datePickerValue} 
       />
       {isOpen && <div className="picker" >
-        <div>
-          {months[month - 1]} {year}
+        <div className="picker--head" >
+          <div>
+            <span>{months[month - 1]} {year}</span>
+            <button className="picker--dropdown" >
+              <ArrowDropDown />
+            </button>
+          </div>
+          <div className="picker--month" >
+            <button onClick={() => {
+              setMonth((old) => old - 1)
+            }} >
+              <ChevronLeft />
+            </button>
+            <button onClick={() => {
+              setMonth((old) => old + 1)
+            }} >
+              <ChevronRight />
+            </button>
+          </div>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>S</th>
-              <th>M</th>
-              <th>T</th>
-              <th>W</th>
-              <th>T</th>
-              <th>F</th>
-              <th>S</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>30</td>
-              <td>31</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>7</td>
-              <td>8</td>
-              <td>9</td>
-              <td>10</td>
-              <td>11</td>
-              <td>12</td>
-            </tr>
-            <tr>
-              <td>13</td>
-              <td>14</td>
-              <td>15</td>
-              <td>16</td>
-              <td>17</td>
-              <td>18</td>
-              <td>19</td>
-            </tr>
-            <tr>
-              <td>20</td>
-              <td>21</td>
-              <td>22</td>
-              <td>23</td>
-              <td>24</td>
-              <td>25</td>
-              <td>26</td>
-            </tr>
-            <tr>
-              <td>27</td>
-              <td>28</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-            </tr>
-            <tr>
-              <td>6</td>
-              <td>7</td>
-              <td>8</td>
-              <td>9</td>
-              <td>10</td>
-              <td>11</td>
-              <td>12</td>
-            </tr>
-          </tbody>
-        </table>
+        <div className="picker--grid" >
+          <div className="table-head" >S</div>
+          <div className="table-head" >M</div>
+          <div className="table-head" >T</div>
+          <div className="table-head" >W</div>
+          <div className="table-head" >T</div>
+          <div className="table-head" >F</div>
+          <div className="table-head" >S</div>
+          <Days month={month - 1} year={year} />
+        </div>
       </div>}
     </span>
   )
