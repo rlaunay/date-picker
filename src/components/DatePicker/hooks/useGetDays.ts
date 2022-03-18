@@ -9,7 +9,7 @@ export const useGetDays = (month: number, year: number) => {
   }
   
   while (date.getMonth() === month) {
-    days.push(new Date(date));
+    days.push(date.getDate());
     date.setDate(date.getDate() + 1);
   }
 

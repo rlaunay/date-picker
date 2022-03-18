@@ -22,13 +22,8 @@ export function parseDate(str: string) {
   }
 }
 
-export function getDate() {
-  const date = new Date();
-  return {
-    year: date.getFullYear(),
-    month: date.getMonth() + 1,
-    day: date.getDate()
-  }
+export function formatDate(date: Date) {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 }
 
 export function checkDate(str: string) {

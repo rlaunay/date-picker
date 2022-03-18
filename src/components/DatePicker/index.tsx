@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useClickOutside } from '../../hooks/useClickOutside';
 
-import { checkDate, getDate, months, parseDate } from './utils';
+import { checkDate, months, formatDate } from './utils';
 
 import './DatePicker.scss';
 import ChevronRight from './assets/ChevronRight';
 import ArrowDropDown from './assets/ArrowDropDown';
 import ChevronLeft from './assets/ChevronLeft';
 import Days from './components/Days';
+import { useMonthAndYear } from './hooks/useMonthAndYear';
 
 export type DatePickerProps = {
   className?: string | undefined;
@@ -19,44 +20,24 @@ export type DatePickerProps = {
 
 export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color = '#e74c3c' }) => {
   const datePickerRef = useRef<HTMLDivElement>(null);
-
-  const [datePickerValue, setDatePickerValue] = useState<string>(() => {
+  const [date, setDate] = useState(() => {
     if (value && checkDate(value)) {
-      return value
+      return new Date(value)
     }
-    return ''
+    return new Date()
   });
+
+  const datePickerValue = formatDate(date)
+
   const [isOpen, setIsOpen] = useState(false);
 
-  const [day, setDay] = useState<number>(() => {
-    if (value && checkDate(value)) {
-      return parseDate(value).day
-    }
-    return getDate().day
-  });
-
-  const [month, setMonth] = useState<number>(() => {
-    if (value && checkDate(value)) {
-      return parseDate(value).month
-    }
-    return getDate().month
-  });
-
-  const [year, setYear] = useState<number>(() => {
-    if (value && checkDate(value)) {
-      return parseDate(value).year
-    }
-    return getDate().year
-  });
+  const { year, month, addMonth, removeMonth } = useMonthAndYear(date.getMonth(), date.getFullYear());
 
   useEffect(() => {
-    const date = `${year}-${month}-${day}`;
-    setDatePickerValue(date)
-
     if (onChange) {
-      onChange(date)
+      onChange(datePickerValue)
     }
-  }, [day, month, year])
+  }, [date])
 
   useClickOutside(datePickerRef, () => {
     setIsOpen(false)
@@ -80,20 +61,16 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
       {isOpen && <div className="picker" >
         <div className="picker--head" >
           <div>
-            <span>{months[month - 1]} {year}</span>
+            <span>{months[month]} {year}</span>
             <button className="picker--dropdown" >
               <ArrowDropDown />
             </button>
           </div>
           <div className="picker--month" >
-            <button onClick={() => {
-              setMonth((old) => old - 1)
-            }} >
+            <button onClick={removeMonth} >
               <ChevronLeft />
             </button>
-            <button onClick={() => {
-              setMonth((old) => old + 1)
-            }} >
+            <button onClick={addMonth} >
               <ChevronRight />
             </button>
           </div>
@@ -106,7 +83,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
           <div className="table-head" >T</div>
           <div className="table-head" >F</div>
           <div className="table-head" >S</div>
-          <Days month={month - 1} year={year} />
+          <Days month={month} year={year} date={date} setDate={setDate} />
         </div>
       </div>}
     </span>
