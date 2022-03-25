@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+.datePicker {
+  --primary-color: #3498db;
+
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  box-sizing: border-box;
+
+  & .picker {
+    position: absolute;
+    padding: 0;
+    border-radius: 3px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  }
+}

@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
+
+import { checkDate, formatDate } from './utils';
+
 import { useClickOutside } from '../../hooks/useClickOutside';
-
-import { checkDate, months, formatDate } from './utils';
-
-import './DatePicker.scss';
-import ChevronRight from './assets/ChevronRight';
-import ArrowDropDown from './assets/ArrowDropDown';
-import ChevronLeft from './assets/ChevronLeft';
-import Days from './components/Days';
 import { useMonthAndYear } from './hooks/useMonthAndYear';
-import Years from './components/Year';
+
+import { Days } from './components/Days/Days';
+import { Years } from './components/Year';
+import { Input } from './components/Input';
+import { Header } from './components/Header';
+
+import classes from './DatePicker.module.scss';
 
 export type DatePickerProps = {
   className?: string | undefined;
@@ -20,18 +21,17 @@ export type DatePickerProps = {
   years?: [number, number]
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color = '#e74c3c', years = [1950, 2030] }) => {
-  const datePickerRef = useRef<HTMLDivElement>(null);
-  
+export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color, years = [1950, 2030] }) => {
   const [date, setDate] = useState(() => {
     if (value && checkDate(value)) {
       return new Date(value)
     }
     return new Date()
   });
-
+  
   const datePickerValue = formatDate(date)
-
+  
+  const datePickerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isYearPickerOpen, setYearPickerOpen] = useState(false);
 
@@ -59,46 +59,27 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   }, [color])
   
   return (
-    <span className="date-picker" ref={datePickerRef} >
-      <input
-        type="text"
+    <span className={classes.datePicker} ref={datePickerRef} >
+      <Input
         style={style} 
-        className={`input-picker${isOpen ? ' active' : ''} ${className}`}
+        className={className}
         onFocus={() => setIsOpen(true)} 
-        value={datePickerValue} 
+        value={datePickerValue}
+        isOpen={isOpen}
       />
-      {isOpen && <div className="picker" >
-        <div className="picker--head" >
-          <div>
-            <span>{months[month]} {year}</span>
-            <button className="picker--dropdown" onClick={() => setYearPickerOpen((old) => !old)} >
-              <ArrowDropDown />
-            </button>
-          </div>
-          {!isYearPickerOpen && <div className="picker--month" >
-            <button className="icon-btn" onClick={removeMonth} >
-              <ChevronLeft />
-            </button>
-            <button className="icon-btn" onClick={addMonth} >
-              <ChevronRight />
-            </button>
-          </div>}
-        </div>
+      {isOpen && <div className={classes.picker} >
+        <Header
+          month={month}
+          year={year}
+          isDropdownOpen={isYearPickerOpen}
+          onClickDropDown={() => setYearPickerOpen((old) => !old)}
+          onClickLeft={removeMonth}
+          onClickRight={addMonth}
+        />
         {isYearPickerOpen ? (
-          <div className="picker--year" >
-            <Years date={date} yearsRange={years} yearChange={changeYearHandler} />
-          </div>
+          <Years date={date} yearsRange={years} yearChange={changeYearHandler} />
         ) : (
-          <div className="picker--grid" >
-            <div className="table-head" >S</div>
-            <div className="table-head" >M</div>
-            <div className="table-head" >T</div>
-            <div className="table-head" >W</div>
-            <div className="table-head" >T</div>
-            <div className="table-head" >F</div>
-            <div className="table-head" >S</div>
-            <Days month={month} year={year} date={date} setDate={setDate} />
-          </div>
+          <Days month={month} year={year} date={date} setDate={setDate} />
         )}
       </div>}
     </span>
