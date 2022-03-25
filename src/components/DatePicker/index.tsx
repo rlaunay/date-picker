@@ -9,6 +9,7 @@ import ArrowDropDown from './assets/ArrowDropDown';
 import ChevronLeft from './assets/ChevronLeft';
 import Days from './components/Days';
 import { useMonthAndYear } from './hooks/useMonthAndYear';
+import Years from './components/Year';
 
 export type DatePickerProps = {
   className?: string | undefined;
@@ -16,10 +17,12 @@ export type DatePickerProps = {
   onChange?: (e: string) => void;
   value?: string;
   color?: string;
+  years?: [number, number]
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color = '#e74c3c' }) => {
+export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color = '#e74c3c', years = [1950, 2030] }) => {
   const datePickerRef = useRef<HTMLDivElement>(null);
+  
   const [date, setDate] = useState(() => {
     if (value && checkDate(value)) {
       return new Date(value)
@@ -30,8 +33,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   const datePickerValue = formatDate(date)
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isYearPickerOpen, setYearPickerOpen] = useState(false);
 
-  const { year, month, addMonth, removeMonth } = useMonthAndYear(date.getMonth(), date.getFullYear());
+  const { year, month, addMonth, removeMonth, setYear } = useMonthAndYear(date.getMonth(), date.getFullYear());
+
+  const changeYearHandler = (n: number) => {
+    setYear(n);
+    setDate((oldDate) => new Date(oldDate.setFullYear(n)))
+  }
 
   useEffect(() => {
     if (onChange) {
@@ -62,29 +71,35 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
         <div className="picker--head" >
           <div>
             <span>{months[month]} {year}</span>
-            <button className="picker--dropdown" >
+            <button className="picker--dropdown" onClick={() => setYearPickerOpen((old) => !old)} >
               <ArrowDropDown />
             </button>
           </div>
-          <div className="picker--month" >
-            <button onClick={removeMonth} >
+          {!isYearPickerOpen && <div className="picker--month" >
+            <button className="icon-btn" onClick={removeMonth} >
               <ChevronLeft />
             </button>
-            <button onClick={addMonth} >
+            <button className="icon-btn" onClick={addMonth} >
               <ChevronRight />
             </button>
+          </div>}
+        </div>
+        {isYearPickerOpen ? (
+          <div className="picker--year" >
+            <Years date={date} yearsRange={years} yearChange={changeYearHandler} />
           </div>
-        </div>
-        <div className="picker--grid" >
-          <div className="table-head" >S</div>
-          <div className="table-head" >M</div>
-          <div className="table-head" >T</div>
-          <div className="table-head" >W</div>
-          <div className="table-head" >T</div>
-          <div className="table-head" >F</div>
-          <div className="table-head" >S</div>
-          <Days month={month} year={year} date={date} setDate={setDate} />
-        </div>
+        ) : (
+          <div className="picker--grid" >
+            <div className="table-head" >S</div>
+            <div className="table-head" >M</div>
+            <div className="table-head" >T</div>
+            <div className="table-head" >W</div>
+            <div className="table-head" >T</div>
+            <div className="table-head" >F</div>
+            <div className="table-head" >S</div>
+            <Days month={month} year={year} date={date} setDate={setDate} />
+          </div>
+        )}
       </div>}
     </span>
   )

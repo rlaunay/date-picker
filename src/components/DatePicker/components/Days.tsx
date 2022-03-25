@@ -1,5 +1,5 @@
 import React from 'react'
-import { useGetDays } from '../hooks/useGetDays';
+import { getDays } from '../utils';
 
 type DaysProps = {
   month: number;
@@ -9,7 +9,7 @@ type DaysProps = {
 }
 
 const Days: React.FC<DaysProps> = ({ month, year, date, setDate }) => {
-  const days = useGetDays(month, year);
+  const days = getDays(month, year);
 
   const changeDateHandler = (day: number) => {
     setDate(new Date(year, month, day))
