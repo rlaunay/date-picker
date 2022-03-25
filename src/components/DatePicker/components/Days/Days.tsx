@@ -11,7 +11,7 @@ type DaysProps = {
   setDate: React.Dispatch<React.SetStateAction<Date>>
 }
 
-const DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'F']
+const DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 export const Days: React.FC<DaysProps> = ({ month, year, date, setDate }) => {
   const days = getDays(month, year);

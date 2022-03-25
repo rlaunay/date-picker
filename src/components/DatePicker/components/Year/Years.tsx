@@ -14,6 +14,8 @@ export const Years: React.FC<YearsProps> = ({ date, yearsRange, yearChange }) =>
   
   const generate = () => {
     const years = [];
+    yearsRange.sort((a, b) => a - b);
+
     for (const n of range(yearsRange[0], yearsRange[1])) {
       const isActive = n === date.getFullYear();
 
