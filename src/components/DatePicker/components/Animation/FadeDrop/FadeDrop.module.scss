@@ -1,0 +1,8 @@
+.fadeDrop {
+  transition: 250ms;
+
+  &.out {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}

@@ -1,17 +1,6 @@
-export const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'Jun',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
+export const capitalize = ([ first, ...rest ]: string, locale = navigator.language) => {
+  return first.toLocaleUpperCase(locale) + rest.join('')
+}
 
 export function formatDate(date: Date) {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`

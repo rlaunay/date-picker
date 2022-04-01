@@ -4,7 +4,7 @@ import ArrowDropDown from '../../assets/ArrowDropDown';
 import ChevronLeft from '../../assets/ChevronLeft';
 import ChevronRight from '../../assets/ChevronRight';
 
-import { months } from '../../utils';
+import { capitalize } from '../../utils';
 
 import classes from './Header.module.scss';
 import { IconBtn } from './IconBtn';
@@ -16,13 +16,15 @@ type HeaderProps = {
   onClickDropDown: () => void;
   onClickLeft: () => void;
   onClickRight: () => void;
+  lang: string;
 }
 
-export const Header: React.FC<HeaderProps> = ({ month, year, isDropdownOpen, onClickDropDown, onClickLeft, onClickRight }) => {
+export const Header: React.FC<HeaderProps> = ({ month, year, isDropdownOpen, onClickDropDown, onClickLeft, onClickRight, lang }) => {
+  const date = new Date(year, month);
   return (
     <div className={classes.header} >
       <div>
-        <span>{months[month]} {year}</span>
+        <span>{capitalize(date.toLocaleString(lang, { month: 'long' }))} {year}</span>
         <IconBtn className={classes.dropdown} onClick={onClickDropDown} >
           <ArrowDropDown />
         </IconBtn>
