@@ -1,20 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import classes from './FadeDrop.module.scss';
+import classes from './FadeUp.module.scss';
 
 const VISIBLE = 1; // L'élément est visible
 const HIDDEN = 2; // L'élément est masqué
 const ENTERING = 3; // L'élément est animé en entrée
 const LEAVING = 4; // L'élément est animé en sortie
 
-type FadeDropProps = {
+type FadeUpProps = {
   visible: boolean;
   duration?: number;
 }
 
-
-
-export const FadeDrop: React.FC<FadeDropProps> = ({ visible, duration = 250, children }) => {
+export const FadeUp: React.FC<FadeUpProps> = ({ visible, duration = 250, children }) => {
   const childRef = useRef(children);
   const [state, setState] = useState(
     visible ? VISIBLE : HIDDEN
@@ -26,7 +24,6 @@ export const FadeDrop: React.FC<FadeDropProps> = ({ visible, duration = 250, chi
 
   useEffect(() => {
     if (!visible) {
-      if (state === HIDDEN) return;
       setState(LEAVING);
     } else {
       setState((s) => (s === HIDDEN ? ENTERING : VISIBLE));
@@ -51,12 +48,12 @@ export const FadeDrop: React.FC<FadeDropProps> = ({ visible, duration = 250, chi
     return null;
   }
 
-  let className = `${classes.fadeDrop}`;
+  let className = `${classes.fadeUp}`;
   if (state === ENTERING) {
-    className = `${classes.fadeDrop} ${classes.entering}`;
+    className = `${classes.fadeUp} ${classes.entering}`;
   }
   if (state === VISIBLE) {
-    className = `${classes.fadeDrop} ${classes.open}`;
+    className = `${classes.fadeUp} ${classes.open}`;
   }
 
   return <div className={className}>{childRef.current}</div>;

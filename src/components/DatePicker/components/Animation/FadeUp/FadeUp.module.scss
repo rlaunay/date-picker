@@ -1,9 +1,9 @@
-.fadeDrop {
+.fadeUp {
   transition: 250ms;
   opacity: 0;
 
   &.entering {
-    transform: translateY(-10px);
+    transform: translateY(10px);
     opacity: 0;
   }
 
