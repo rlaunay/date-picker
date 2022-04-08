@@ -11,8 +11,7 @@ import { Input } from './components/Input';
 import { Header } from './components/Header';
 
 import classes from './DatePicker.module.scss';
-import { FadeDrop } from './components/Animation/FadeDrop/FadeDrop';
-import { FadeUp } from './components/Animation/FadeUp';
+import { Switch } from './components/Animation/Switch';
 
 export type DatePickerProps = {
   className?: string | undefined;
@@ -36,9 +35,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   
   const datePickerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [dropdown, setDropdown] = useState(false);
   const [isYearPickerOpen, setYearPickerOpen] = useState(false);
-  const [isDayOpen, setDayOpen] = useState(true);
 
   const { year, month, addMonth, removeMonth, setYear } = useMonthAndYear(date.getMonth(), date.getFullYear());
 
@@ -62,28 +59,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
 
     datePickerRef.current.style.setProperty('--primary-color', color)
   }, [color])
-
-  useEffect(() => {
-    if (dropdown) {
-      setDayOpen(!dropdown)
-      const timer = setTimeout(() => {
-        setYearPickerOpen(dropdown);
-      }, 250)
-
-      return () => {
-        clearTimeout(timer)
-      }
-    } else {
-      setYearPickerOpen(dropdown);
-      const timer = setTimeout(() => {
-        setDayOpen(!dropdown)
-      }, 250)
-
-      return () => {
-        clearTimeout(timer)
-      }
-    }
-  }, [dropdown])
   
   return (
     <span className={classes.datePicker} ref={datePickerRef} >
@@ -101,17 +76,16 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
           year={year}
           isDropdownOpen={isYearPickerOpen}
           onClickDropDown={() => {
-            setDropdown((old) => !old)
+            setYearPickerOpen((old) => !old)
           }}
           onClickLeft={removeMonth}
           onClickRight={addMonth}
         />
-        <FadeDrop visible={isYearPickerOpen} >
-          <Years date={date} yearsRange={years} yearChange={changeYearHandler} />
-        </FadeDrop>
-        <FadeUp visible={isDayOpen} >
-          <Days month={month} year={year} date={date} setDate={setDate} />
-        </FadeUp>
+        <Switch
+          isOpen={isYearPickerOpen}
+          firstElemet={<Days month={month} year={year} date={date} setDate={setDate} />}
+          secondElement={<Years date={date} yearsRange={years} yearChange={changeYearHandler} />}
+        />
       </div>}
     </span>
   )

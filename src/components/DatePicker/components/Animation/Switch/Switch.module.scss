@@ -1,0 +1,22 @@
+.switch {
+  transition: 125ms;
+  opacity: 0;
+  position: relative;
+
+  &.up {
+    transform: translateY(-5px);
+    opacity: 0;
+    position: absolute;
+  }
+
+  &.down {
+    transform: translateY(5px);
+    opacity: 0;
+    position: absolute;
+  }
+
+  &.open {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
