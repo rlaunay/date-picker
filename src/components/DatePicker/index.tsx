@@ -26,7 +26,7 @@ export type DatePickerProps = {
 
 export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color, years = [1950, 2030], lang = navigator.language }) => {
   const [date, setDate] = useState(() => {
-    if (value && checkDate(value)) {
+    if (value) {
       return new Date(value)
     }
     return new Date()
@@ -36,7 +36,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   
   const datePickerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
+
   const [dropdown, setDropdown] = useState(false);
+
   const [isYearPickerOpen, setYearPickerOpen] = useState(false);
   const [isDayOpen, setDayOpen] = useState(true);
 

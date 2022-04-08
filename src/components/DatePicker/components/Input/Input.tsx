@@ -18,6 +18,7 @@ export const Input: React.FC<InputProps> = ({ style, className = '', value, onFo
       className={`${classes.input} ${isOpen ? classes.active : ''} ${className}`}
       onFocus={onFocus} 
       value={value} 
+      readOnly
     />
   )
 }
