@@ -35,12 +35,6 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   
   const datePickerRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState(false);
-<<<<<<< HEAD
-
-  const [dropdown, setDropdown] = useState(false);
-
-=======
->>>>>>> switch-comp
   const [isYearPickerOpen, setYearPickerOpen] = useState(false);
 
   const { year, month, addMonth, removeMonth, setYear } = useMonthAndYear(date.getMonth(), date.getFullYear());

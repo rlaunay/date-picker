@@ -20,7 +20,7 @@ export const Years: React.FC<YearsProps> = ({ date, yearsRange, yearChange }) =>
       const isActive = n === date.getFullYear();
 
       years.push(
-        <div className={classes.cell} >
+        <div className={classes.cell} key={n} >
           <Button className={classes.year} isActive={isActive} onClick={() => yearChange(n)} >{n}</Button>
         </div>
       );
