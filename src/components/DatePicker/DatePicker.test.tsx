@@ -19,9 +19,10 @@ describe('Date Picker input', () => {
   })
 
   test("Check date picker input focus for open picker", async () => {
-    const rendered = render(<DatePicker />)
-    fireEvent.focus(await rendered.findByDisplayValue('4/1/2022'))
-    expect(await rendered.findByText('S')).toBeInTheDocument()
+    const date = '4/1/2022';
+    const rendered = render(<DatePicker value={date} />)
+    fireEvent.focus(await rendered.findByDisplayValue(date))
+    expect(await rendered.findByText('W')).toBeInTheDocument()
   })
 
 })

@@ -19,19 +19,19 @@ const LEAVING = 4; // L'élément est animé en sortie
 const DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 export const Days: React.FC<DaysProps> = ({ month, year, date, setDate }) => {
-  const [days, setDays] = useState<(number | null)[]>(getDays(month, year));;
-  // const days = getDays(month, year);
+  // const [days, setDays] = useState<(number | null)[]>(getDays(month, year));
+  const days = getDays(month, year);
 
   const changeDateHandler = (day: number) => {
     setDate(new Date(year, month, day))
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      console.log('oui')
-      setDays(getDays(month, year))
-    }, 250)
-  }, [month]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     console.log('oui')
+  //     setDays(getDays(month, year))
+  //   }, 250)
+  // }, [month]);
 
   return (
     <div className={classes.days} >
