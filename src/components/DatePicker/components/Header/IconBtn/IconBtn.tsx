@@ -8,7 +8,7 @@ type IconBtnProps = {
 }
 
 export const IconBtn: React.FC<IconBtnProps> = ({ children, onClick, className = '' }) => {
-  return <button className={`${classes.icobtn} ${className}`} onClick={onClick} >
+  return <button className={`${classes.icobtn} ${className}`} onClick={onClick} type="button" >
     {children}
   </button>
 }

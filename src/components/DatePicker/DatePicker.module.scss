@@ -2,6 +2,7 @@
 
 .datePicker {
   --primary-color: #3498db;
+  --bg-color: #ccc;
 
   font-family: 'Roboto', sans-serif;
   position: relative;
@@ -13,5 +14,6 @@
     border-radius: 3px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     overflow: hidden;
+    background-color: var(--bg-color);
   }
 }

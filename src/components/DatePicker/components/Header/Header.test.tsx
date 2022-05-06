@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import {render, screen} from '@testing-library/react';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import { Header } from '.';
 
@@ -30,6 +30,27 @@ describe('Input', () => {
       lang="fr"
     />)
     expect(screen.getByText("Mai 2022")).toBeInTheDocument()
+  })
+
+  test("Check input language", async () => {
+    const onClick = jest.fn();
+    render(<Header 
+      month={4} 
+      year={2022} 
+      isDropdownOpen={false} 
+      onClickDropDown={onClick} 
+      onClickLeft={onClick}
+      onClickRight={onClick}
+      lang="fr"
+    />)
+
+    const allButton = screen.getAllByRole('button');
+
+    allButton.forEach(btn => {
+      fireEvent.click(btn);
+    })
+
+    expect(onClick).toHaveBeenCalledTimes(3)
   })
 
 })

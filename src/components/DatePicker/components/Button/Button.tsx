@@ -10,6 +10,6 @@ type ButtonProps = {
 
 export const Button: React.FC<ButtonProps> = ({ className = '', isActive, onClick, children }) => {
   return (
-    <button className={`${classes.button} ${isActive ? classes.active : ''} ${className}`} onClick={onClick} >{children}</button>
+    <button className={`${classes.button} ${isActive ? classes.active : ''} ${className}`} onClick={onClick} type="button" >{children}</button>
   )
 }

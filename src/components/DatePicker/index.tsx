@@ -19,11 +19,12 @@ export type DatePickerProps = {
   onChange?: (e: string) => void;
   value?: string;
   color?: string;
+  bgColor?: string;
   years?: [number, number];
   lang?: string;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color, years = [1950, 2030], lang = navigator.language }) => {
+export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color, bgColor, years = [1950, 2030], lang = navigator.language }) => {
   const [date, setDate] = useState(() => {
     if (value) {
       return new Date(value)
@@ -55,10 +56,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
   })
 
   useEffect(() => {
-    if (!datePickerRef.current || !color) return;
+    if (datePickerRef.current && color) {
+      datePickerRef.current.style.setProperty('--primary-color', color)
+    };
 
-    datePickerRef.current.style.setProperty('--primary-color', color)
-  }, [color])
+    if (datePickerRef.current && bgColor) {
+      datePickerRef.current.style.setProperty('--bg-color', bgColor)
+    };
+  }, [color, bgColor])
   
   return (
     <span className={classes.datePicker} ref={datePickerRef} >
