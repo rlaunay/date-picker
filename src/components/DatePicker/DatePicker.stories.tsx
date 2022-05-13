@@ -9,7 +9,7 @@ const meta: Meta = {
 export default meta;
 
 const Template = (args: DatePickerProps) => {
-  return <div style={{ height: 300 }} >
+  return <div style={{ height: 300, width: 200 }} >
     <DatePicker {...args} />
   </div>
 }
