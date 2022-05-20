@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FocusEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
 
 import { checkDate, formatDate } from './utils';
 
-import { useClickOutside } from '../../hooks/useClickOutside';
+import { useClickOutside } from './hooks/useClickOutside';
 import { useMonthAndYear } from './hooks/useMonthAndYear';
 
 import { Days } from './components/Days/Days';
@@ -14,9 +14,12 @@ import classes from './DatePicker.module.scss';
 import { Switch } from './components/Animation/Switch';
 
 export type DatePickerProps = {
+  id?: string;
+  name?: string;
   className?: string | undefined;
   style?: React.CSSProperties | undefined;
   onChange?: (e: string) => void;
+  onBlur?: FocusEventHandler<HTMLInputElement> | undefined;
   value?: string;
   color?: string;
   bgColor?: string;
@@ -24,7 +27,7 @@ export type DatePickerProps = {
   lang?: string;
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChange, value, color, bgColor, years = [1950, 2030], lang = navigator.language }) => {
+export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({ className, style, onChange, onBlur, value, color, bgColor, years = [1950, 2030], lang = navigator.language }, ref) => {
   const [date, setDate] = useState(() => {
     if (value) {
       return new Date(value)
@@ -73,6 +76,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
         onFocus={() => setIsOpen(true)} 
         value={datePickerValue}
         isOpen={isOpen}
+        onBlur={onBlur}
+        ref={ref}
       />
       {isOpen && <div className={classes.picker} >
         <Header
@@ -94,4 +99,4 @@ export const DatePicker: React.FC<DatePickerProps> = ({ className, style, onChan
       </div>}
     </span>
   )
-}
+})
