@@ -1,5 +1,11 @@
 import { useState } from "react"
 
+/**
+ * State to manage the year and the month 
+ * @param {number} initialMonth 
+ * @param {number} initialYear 
+ * @returns 
+ */
 export const useMonthAndYear = (initialMonth: number, initialYear: number) => {
   const [{ month, year }, setDate] = useState({ month: initialMonth, year: initialYear});
 

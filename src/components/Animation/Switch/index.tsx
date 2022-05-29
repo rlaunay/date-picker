@@ -13,6 +13,11 @@ const HIDDEN = 2; // L'élément est masqué
 const ENTERING = 3; // L'élément est animé en entrée
 const LEAVING = 4; // L'élément est animé en sortie
 
+/**
+ * Switch component is responsible for the switch animation between year picker and months / days picker
+ * @param {SwitchProps} props
+ * @returns 
+ */
 export const Switch: React.FC<SwitchProps> = ({ isOpen, firstElemet, secondElement, duration = 125 }) => {
   const [stateFirst, setStateFirst] = useState(isOpen ? HIDDEN : VISIBLE);
   const [stateSecond, setStateSecond] = useState(isOpen ? VISIBLE : HIDDEN);

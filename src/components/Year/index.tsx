@@ -10,6 +10,11 @@ type YearsProps = {
   yearChange: (newYear: number) => void;
 }
 
+/**
+ * Component that render a list of year you can choose to change the datepicker date
+ * @param {YearsProps} props 
+ * @returns 
+ */
 export const Years: React.FC<YearsProps> = ({ date, yearsRange, yearChange }) => {
   
   const generate = () => {

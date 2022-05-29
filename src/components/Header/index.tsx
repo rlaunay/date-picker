@@ -19,6 +19,11 @@ type HeaderProps = {
   lang: string;
 }
 
+/**
+ * The header component of the picker with button for change date and switch between year picker and days / months picker
+ * @param {HeaderProps} props
+ * @returns 
+ */
 export const Header: React.FC<HeaderProps> = ({ month, year, isDropdownOpen, onClickDropDown, onClickLeft, onClickRight, lang }) => {
   const date = new Date(year, month);
   return (

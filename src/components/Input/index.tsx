@@ -1,8 +1,10 @@
-import React, { FocusEventHandler, forwardRef } from 'react';
+import React, { ChangeEventHandler, FocusEventHandler, forwardRef } from 'react';
 
 import classes from './Input.module.scss';
 
 type InputProps = {
+  id?: string;
+  name?: string;
   className?: string | undefined;
   style?: React.CSSProperties | undefined;
   value?: string;
@@ -11,11 +13,16 @@ type InputProps = {
   isOpen: boolean;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(({ style, className = '', value, onFocus, isOpen, onBlur }, ref) => {
+/**
+ * Input component of the Datepicker that diplay the selected date
+ */
+const Input = forwardRef<HTMLInputElement, InputProps>(({ id, name, style, className = '', value, onFocus, isOpen, onBlur }, ref) => {
   return (
     <input
+      id={id}
+      name={name}
       type="text"
-      style={style} 
+      style={style}
       className={`${classes.input} ${isOpen ? classes.active : ''} ${className}`}
       onFocus={onFocus}
       onBlur={onBlur}

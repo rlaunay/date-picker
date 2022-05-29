@@ -1,11 +1,9 @@
 import React, { FocusEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
 
-import { checkDate, formatDate } from './utils';
-
 import { useClickOutside } from './hooks/useClickOutside';
 import { useMonthAndYear } from './hooks/useMonthAndYear';
 
-import { Days } from './components/Days/Days';
+import { Days } from './components/Days';
 import { Years } from './components/Year';
 import { Input } from './components/Input';
 import { Header } from './components/Header';
@@ -18,7 +16,7 @@ export type DatePickerProps = {
   name?: string;
   className?: string | undefined;
   style?: React.CSSProperties | undefined;
-  onChange?: (e: string) => void;
+  onChange?: (e: string) => void | undefined;
   onBlur?: FocusEventHandler<HTMLInputElement> | undefined;
   value?: string;
   color?: string;
@@ -27,13 +25,14 @@ export type DatePickerProps = {
   lang?: string;
 }
 
-export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({ className, style, onChange, onBlur, value, color, bgColor, years = [1950, 2030], lang = navigator.language }, ref) => {
+export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({ id, name, className, style, onChange, onBlur, value, color, bgColor, years = [1950, 2030], lang = navigator.language }, ref) => {
   const [date, setDate] = useState(() => {
     if (value) {
       return new Date(value)
     }
     return new Date()
   });
+
   
   const datePickerValue = new Intl.DateTimeFormat('en-US', { calendar: 'iso8601' }).format(date)
   
@@ -49,9 +48,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({ class
   }
 
   useEffect(() => {
-    if (onChange) {
-      onChange(datePickerValue)
-    }
+    onChange && onChange(datePickerValue)
   }, [date])
 
   useClickOutside(datePickerRef, () => {
@@ -71,9 +68,11 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(({ class
   return (
     <span className={classes.datePicker} ref={datePickerRef} >
       <Input
+        id={id}
+        name={name}
         style={style} 
         className={className}
-        onFocus={() => setIsOpen(true)} 
+        onFocus={() => setIsOpen(true)}
         value={datePickerValue}
         isOpen={isOpen}
         onBlur={onBlur}

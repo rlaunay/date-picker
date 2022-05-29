@@ -11,27 +11,19 @@ type DaysProps = {
   setDate: React.Dispatch<React.SetStateAction<Date>>
 }
 
-const VISIBLE = 1; // L'élément est visible
-const HIDDEN = 2; // L'élément est masqué
-const ENTERING = 3; // L'élément est animé en entrée
-const LEAVING = 4; // L'élément est animé en sortie
-
 const DAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
+/**
+ * The days components renders a list of days of the given month and years, day can be click for change the selected day
+ * @param {DaysProps} props
+ * @returns 
+ */
 export const Days: React.FC<DaysProps> = ({ month, year, date, setDate }) => {
-  // const [days, setDays] = useState<(number | null)[]>(getDays(month, year));
   const days = getDays(month, year);
 
   const changeDateHandler = (day: number) => {
     setDate(new Date(year, month, day))
   }
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     console.log('oui')
-  //     setDays(getDays(month, year))
-  //   }, 250)
-  // }, [month]);
 
   return (
     <div className={classes.days} >

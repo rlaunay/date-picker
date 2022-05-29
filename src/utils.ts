@@ -1,15 +1,20 @@
+
+/**
+ * Capitalize the first letter of given word
+ * @param {string} word 
+ * @param {string} locale 
+ * @returns {string}
+ */
 export const capitalize = ([ first, ...rest ]: string, locale = navigator.language) => {
   return first.toLocaleUpperCase(locale) + rest.join('')
 }
 
-export function formatDate(date: Date) {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-}
-
-export function checkDate(str: string) {
-  return /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/.test(str)
-}
-
+/**
+ * Return an array with a length of 42 with null or a number who represent a days in a week (0 to 6)
+ * @param {number} month 
+ * @param {number} year 
+ * @returns {(number | null)[]}
+ */
 export const getDays = (month: number, year: number) => {
   const date = new Date(year, month, 1);
   const days = []
@@ -32,6 +37,13 @@ export const getDays = (month: number, year: number) => {
   return days
 }
 
+/**
+ * Return a iterable object that start / end and increment in depend of the given parameter
+ * @param {number} start 
+ * @param {number} end 
+ * @param {number | undefined} step 
+ * @returns 
+ */
 export function range(start: number, end: number, step = 1) {
   return {
     [Symbol.iterator]() {

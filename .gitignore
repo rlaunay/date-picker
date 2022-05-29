@@ -2,3 +2,5 @@
 /dist/
 
 /storybook-static/
+
+.firebase
