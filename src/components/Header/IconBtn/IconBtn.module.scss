@@ -1,0 +1,18 @@
+.icobtn {
+  padding: 0;
+  height: 24px;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background 150ms;
+  color: #95a5a6;
+
+  &:hover {
+    background-color: #ecf0f1;
+  }
+}

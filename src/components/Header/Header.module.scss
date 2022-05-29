@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 16px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+
+  & div {
+    display: flex;
+    align-items: center;
+
+    & .dropdown {
+      margin-left: 4px;
+    }
+
+
+    & .last {
+      margin-left: 24px;
+      margin-right: 8px;
+    }
+  }
+}

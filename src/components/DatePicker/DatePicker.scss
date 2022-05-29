@@ -1,9 +1,0 @@
-.container {
-  position: relative;
-  background-color: red;
-
-  & .picker {
-    position: absolute;
-    border: 1px solid black;
-  }
-}

@@ -1,0 +1,35 @@
+.years {
+  display: grid;
+  grid-template-columns: repeat(4, 56px);
+  grid-auto-rows: 32px;
+  padding: 4px 7.6px 8px 12px;
+  margin-right: 7.6px;
+  height: 216px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+
+  & .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & .year {
+      height: 28px;
+      width: 50px;
+    }
+  }
+
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}

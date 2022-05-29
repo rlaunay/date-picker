@@ -1,0 +1,22 @@
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 32px);
+  grid-template-rows: 28px repeat(6, 32px);
+  padding: 0 16px;
+  padding-bottom: 8px;
+
+  & .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.head {
+      color: grey;
+    }
+
+    & .day {
+      height: 27px;
+      width: 27px;
+    }
+  }
+}
